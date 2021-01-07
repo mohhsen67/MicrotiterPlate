@@ -25,7 +25,7 @@ export class MicroplateComponent implements OnInit {
 
   onBlurEvent(event: any) {
     const columns = event.target.value;
-    const arr = columns.split(',').map(item => item.trim());
+    const arr = columns.split(',').map((item: any) => item.trim());
 
     this.form.patchValue({ 'columns': arr.sort().join(',') });
   }

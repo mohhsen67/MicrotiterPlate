@@ -4,10 +4,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 // Import Components
 import { MicroplateComponent } from '../../components/microplate/microplate.component';
+import { PlateSelectorComponent } from '../../components/plate-selector/plate-selector.component';
 
 @NgModule({
   declarations: [
-    MicroplateComponent
+    MicroplateComponent,
+    PlateSelectorComponent
   ],
   imports: [
     CommonModule,

@@ -11,7 +11,7 @@ import { IsValidDirective } from './directives/is-valid.directive';
 @NgModule({
   declarations: [
     AppComponent,
-    IsValidDirective
+    IsValidDirective,
   ],
   imports: [
     BrowserModule,
