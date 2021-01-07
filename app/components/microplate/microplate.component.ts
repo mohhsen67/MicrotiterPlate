@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { Validators, FormControl, FormGroup } from '@angular/forms';
+import { isValidValidator } from '../../directives/is-valid.directive';
 
 @Component({
   selector: 'app-microplate',
@@ -7,17 +8,18 @@ import { FormBuilder } from '@angular/forms';
   styleUrls: ['./microplate.component.css']
 })
 export class MicroplateComponent implements OnInit {
-  form;
+  form: FormGroup;
 
-  constructor(
-    private formBuilder: FormBuilder
-  ) { 
-    this.form = this.formBuilder.group({
-      columns: ''
+  ngOnInit(): void {
+    this.form = new FormGroup({
+      columns: new FormControl('', [
+        Validators.required,
+        isValidValidator()
+      ])
     });
   }
 
-  ngOnInit(): void {
+  get columns() { 
+    return this.form.get('columns'); 
   }
-
 }

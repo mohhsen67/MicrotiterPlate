@@ -6,10 +6,12 @@ import { AppComponent } from './app.component';
 
 // Import feature modules
 import { PlateModule } from './modules/plate/plate.module';
+import { IsValidDirective } from './directives/is-valid.directive';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    IsValidDirective
   ],
   imports: [
     BrowserModule,

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 // Import Components
 import { MicroplateComponent } from '../../components/microplate/microplate.component';
@@ -11,7 +11,6 @@ import { MicroplateComponent } from '../../components/microplate/microplate.comp
   ],
   imports: [
     CommonModule,
-    FormsModule,
     ReactiveFormsModule
   ],
   exports: [
