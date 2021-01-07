@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-
 import { FormBuilder } from '@angular/forms';
 
 @Component({
@@ -8,12 +7,12 @@ import { FormBuilder } from '@angular/forms';
   styleUrls: ['./microplate.component.css']
 })
 export class MicroplateComponent implements OnInit {
-  from;
+  form;
 
   constructor(
     private formBuilder: FormBuilder
   ) { 
-    this.from = this.formBuilder.group({
+    this.form = this.formBuilder.group({
       columns: ''
     });
   }
