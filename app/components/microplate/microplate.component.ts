@@ -19,7 +19,14 @@ export class MicroplateComponent implements OnInit {
     });
   }
 
-  get columns() { 
-    return this.form.get('columns'); 
+  get columns() {
+    return this.form.get('columns');
+  }
+
+  onBlurEvent(event: any) {
+    const columns = event.target.value;
+    const arr = columns.split(',').map(item => item.trim());
+
+    this.form.patchValue({ 'columns': arr.sort().join(',') });
   }
 }
