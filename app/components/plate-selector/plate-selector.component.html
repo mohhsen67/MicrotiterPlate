@@ -1,3 +1,9 @@
 <div class="selector">
-    
+    <div *ngFor="let number of numbers" 
+         [ngClass]="{ 'well': true, 'last-column-well': isLastColumn(number), 'no-border': isFirstRowOrFirstColumn(number) || isExactlyFirstCell(number) }">
+        {{ isFirstRowOrFirstColumn(number) 
+            ? isFirstColumn(number) ? letters[((number - 1) / (columns + 1)) - 1]  : number - 1
+            : ''
+        }}
+    </div>
 </div>
