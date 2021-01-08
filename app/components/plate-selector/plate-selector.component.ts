@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./plate-selector.component.css']
 })
 export class PlateSelectorComponent implements OnInit {
+  wells: number = 96;
+  value: string = '';
 
   constructor() { }
 
