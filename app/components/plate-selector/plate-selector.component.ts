@@ -5,7 +5,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
   templateUrl: './plate-selector.component.html',
   styleUrls: ['./plate-selector.component.css']
 })
-// Child Component
+// Child Component.
 export class PlateSelectorComponent {
   wells: number = 96;
   columns: number = 12;
