@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, Input } from '@angular/core';
 
 @Component({
   selector: 'app-plate-selector',
@@ -7,7 +7,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 })
 // Child Component.
 export class PlateSelectorComponent {
-  wells: number = 96;
+  @Input() wells: number = 96;
   columns: number = 12;
   letters: Array<string> = 'abcdefghijklmnopqrstuvwxyz'.toUpperCase().split('');
   selectedColumns: Array<number> = [];
@@ -53,7 +53,6 @@ export class PlateSelectorComponent {
     if(this.isFirstColumn(number)) return;
 
     this.selectedColumns.push((number - 1) % (this.columns + 1));
-    this.selectedColumns.sort();
 
     this.selectColumn.emit(this.selectedColumns);
   }

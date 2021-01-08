@@ -10,5 +10,7 @@
         </div>
     </form>
 
-    <app-plate-selector (selectColumn)="updateInput($event)"></app-plate-selector>
+    <app-plate-selector (selectColumn)="updateInput($event)" 
+                        [wells]="96">
+    </app-plate-selector>
 </div>

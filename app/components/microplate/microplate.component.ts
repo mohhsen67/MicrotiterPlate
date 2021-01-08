@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Validators, FormControl, FormGroup } from '@angular/forms';
 import { isValidValidator } from '../../directives/is-valid.directive';
-const isNumbersFieldValid = require('../../utils/utils.js');
+const { isNumbersFieldValid, customSort } = require('../../utils/utils.js');
 import { PlateSelectorComponent } from '../plate-selector/plate-selector.component';
 
 @Component({
@@ -31,11 +31,8 @@ export class MicroplateComponent implements OnInit {
 
   onBlurEvent(event: any) {
     const columns = event.target.value;
-    const arr = columns.split(',').map((item: any) => item.trim());
 
-    this.form.patchValue({ 'columns': arr.sort( (a, b) => 
-      a - b
-    ).join(', ') });
+    this.form.patchValue({ 'columns': customSort(columns).join(', ') });
   }
 
   onKeyUp(value: string): void {
@@ -58,7 +55,8 @@ export class MicroplateComponent implements OnInit {
         }
       });
 
-      this.selectedColumns = result.sort( (a, b) => a - b);
+      //this.selectedColumns = result.sort( (a, b) => a - b);
+      this.selectedColumns = result;
     } else {
       this.selectedColumns = [];
     }
@@ -75,8 +73,7 @@ export class MicroplateComponent implements OnInit {
   }
 
   updateInput(selectedColumns: Array<number>): void {
-    this.form.patchValue({ 'columns': selectedColumns.sort( (a, b) => 
-      a - b
-    ).join(', ') });
+    // this.form.patchValue({ 'columns': selectedColumns.sort( (a, b) => a - b ).join(', ') });
+    this.form.patchValue({ 'columns': customSort(selectedColumns.join(',')).join(', ') });
   }
 }

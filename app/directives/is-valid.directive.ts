@@ -1,6 +1,6 @@
 import { Directive, Input } from '@angular/core';
 import { AbstractControl, NG_VALIDATORS, Validator, ValidatorFn } from '@angular/forms';
-const isNumbersFieldValid = require('../utils/utils.js');
+const { isNumbersFieldValid } = require('../utils/utils.js');
 
 export function isValidValidator(): ValidatorFn {
   return (control: AbstractControl): {[key: string]: any} | null => {
