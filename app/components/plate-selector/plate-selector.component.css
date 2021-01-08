@@ -9,8 +9,8 @@
 .well {
     width: 30px;
     height: 30px;
-    border: 1px solid gray;
     border-radius: 50%;
+    border: 1px solid gray;
     float: left;
     text-align: center;
     line-height: 30px;
@@ -22,8 +22,18 @@
 
 .no-border {
     border-color: white;
+    cursor: default;
+}
+
+.has-border {
+    border: 1px solid gray;
 }
 
 .highlight {
     background-color: lightpink;
+}
+
+.well.has-border:hover {
+    background-color: lightpink;
+    cursor: pointer;
 }

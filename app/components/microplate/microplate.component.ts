@@ -73,4 +73,10 @@ export class MicroplateComponent implements OnInit {
   updatePlate(): void {
     this.plateSelector.onColumnsChanged(this.selectedColumns);
   }
+
+  updateInput(selectedColumns: Array<number>): void {
+    this.form.patchValue({ 'columns': selectedColumns.sort( (a, b) => 
+      a - b
+    ).join(', ') });
+  }
 }

@@ -1,4 +1,4 @@
-import { Component, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-plate-selector',
@@ -11,6 +11,7 @@ export class PlateSelectorComponent {
   columns: number = 12;
   letters: Array<string> = 'abcdefghijklmnopqrstuvwxyz'.toUpperCase().split('');
   selectedColumns: Array<number> = [];
+  @Output() selectColumn: EventEmitter<any> = new EventEmitter<any>();
 
   // I added some more wells because of the indicators (first row numbers and first column letters)
   numbers: Array<number> = Array(this.wells + this.columns + (this.wells / this.columns + 1)).fill().map((item, index) => ++index);
@@ -46,5 +47,14 @@ export class PlateSelectorComponent {
 
   isWellSelected(number: number): boolean {
     return this.selectedColumns.indexOf((number - 1) % (this.columns + 1)) != -1;
+  }
+
+  onSelectColumn (number: number) {
+    if(this.isFirstColumn(number)) return;
+
+    this.selectedColumns.push((number - 1) % (this.columns + 1));
+    this.selectedColumns.sort();
+
+    this.selectColumn.emit(this.selectedColumns);
   }
 }
