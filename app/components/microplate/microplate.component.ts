@@ -1,15 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Validators, FormControl, FormGroup } from '@angular/forms';
 import { isValidValidator } from '../../directives/is-valid.directive';
 const isNumbersFieldValid = require('../../utils/utils.js');
+import { PlateSelectorComponent } from '../plate-selector/plate-selector.component';
 
 @Component({
   selector: 'app-microplate',
   templateUrl: './microplate.component.html',
   styleUrls: ['./microplate.component.css']
 })
+// Parent Component
 export class MicroplateComponent implements OnInit {
   form: FormGroup;
+  selectedColumns: Array<number> = [];
+  @ViewChild(PlateSelectorComponent)
+  plateSelector: PlateSelectorComponent;
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -28,15 +33,16 @@ export class MicroplateComponent implements OnInit {
     const columns = event.target.value;
     const arr = columns.split(',').map((item: any) => item.trim());
 
-    this.form.patchValue({ 'columns': arr.sort().join(', ') });
+    console.log(arr);
+    this.form.patchValue({ 'columns': arr.sort( (a, b) => a - b).join(', ') });
   }
 
   onKeyUp(value: string): void {
-    value = value.replaceAll(' ', '');
+    value = value.split(' ').join('');
 
     if (isNumbersFieldValid(value)) {
       const inputArr: Array<string> = value.split(',');
-      const result: Array<number> = [];
+      const result = [];
 
       inputArr.forEach( (item: string) => {
         if(this.isNotRangeItem(item)) {
@@ -51,11 +57,19 @@ export class MicroplateComponent implements OnInit {
         }
       });
 
-      console.log(result.sort());
+      this.selectedColumns = result.sort( (a, b) => a - b);
+    } else {
+      this.selectedColumns = [];
     }
+
+    this.updatePlate();    
   }
 
   isNotRangeItem(item: string): boolean {
     return item.indexOf('-') == -1;
+  }
+
+  updatePlate(): void {
+    this.plateSelector.onColumnsChanged(this.selectedColumns);
   }
 }

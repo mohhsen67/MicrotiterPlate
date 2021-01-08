@@ -1,14 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-plate-selector',
   templateUrl: './plate-selector.component.html',
   styleUrls: ['./plate-selector.component.css']
 })
+// Child Component
 export class PlateSelectorComponent {
   wells: number = 96;
   columns: number = 12;
   letters: Array<string> = 'abcdefghijklmnopqrstuvwxyz'.toUpperCase().split('');
+  selectedColumns: Array<number> = [];
 
   // I added some more wells because of the indicators (first row numbers and first column letters)
   numbers: Array<number> = Array(this.wells + this.columns + (this.wells / this.columns + 1)).fill().map((item, index) => ++index);
@@ -16,8 +18,8 @@ export class PlateSelectorComponent {
   isFirstRowOrFirstColumn(number: number): boolean {
     let result: boolean =
       (this.isFirstColumn(number) ||
-       this.isFirstRow(number)) &&
-       !this.isExactlyFirstCell(number);
+        this.isFirstRow(number)) &&
+      !this.isExactlyFirstCell(number);
 
     return result;
   }
@@ -36,5 +38,13 @@ export class PlateSelectorComponent {
 
   isExactlyFirstCell(number: number): boolean {
     return number == 1;
+  }
+
+  onColumnsChanged(selectedColumns: Array<number>): void {
+    this.selectedColumns = selectedColumns;
+  }
+
+  isWellSelected(number: number): boolean {
+    return this.selectedColumns.indexOf((number - 1) % (this.columns + 1)) != -1;
   }
 }
