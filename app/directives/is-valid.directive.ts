@@ -20,6 +20,8 @@ export class IsValidDirective implements Validator {
 }
 
 const isNumbersFieldValid = (str: any) => {
+  if (str == '') return true;
+
   let lower = 1, upper = 384;
   
   // Removing the unnecessary spaces
