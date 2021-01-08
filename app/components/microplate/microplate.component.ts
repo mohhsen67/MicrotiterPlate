@@ -33,8 +33,9 @@ export class MicroplateComponent implements OnInit {
     const columns = event.target.value;
     const arr = columns.split(',').map((item: any) => item.trim());
 
-    console.log(arr);
-    this.form.patchValue({ 'columns': arr.sort( (a, b) => a - b).join(', ') });
+    this.form.patchValue({ 'columns': arr.sort( (a, b) => 
+      a - b
+    ).join(', ') });
   }
 
   onKeyUp(value: string): void {
