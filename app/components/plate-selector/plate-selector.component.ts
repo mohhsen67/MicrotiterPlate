@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Output, Input } from '@angular/core';
+import { Component, EventEmitter, Output, Input, OnInit } from '@angular/core';
+const { getDimensions } = require('../../utils/utils.js');
 
 @Component({
   selector: 'app-plate-selector',
@@ -6,15 +7,23 @@ import { Component, EventEmitter, Output, Input } from '@angular/core';
   styleUrls: ['./plate-selector.component.css']
 })
 // Child Component.
-export class PlateSelectorComponent {
-  @Input() wells: number = 96;
-  columns: number = 12;
+export class PlateSelectorComponent implements OnInit {
+  @Input() wells: number;
+  columns: number;
   letters: Array<string> = 'abcdefghijklmnopqrstuvwxyz'.toUpperCase().split('');
   selectedColumns: Array<number> = [];
   @Output() selectColumn: EventEmitter<any> = new EventEmitter<any>();
 
   // I added some more wells because of the indicators (first row numbers and first column letters)
-  numbers: Array<number> = Array(this.wells + this.columns + (this.wells / this.columns + 1)).fill().map((item, index) => ++index);
+  numbers: Array<number> = [];
+  
+  ngOnInit() {
+    // We can dynamically calculate the number of columns based on the whole number of wells
+    this.columns = getDimensions(96)[1];
+
+    this.numbers = Array(this.wells + this.columns + (this.wells / this.columns + 1))
+                     .fill().map((item, index) => ++index);
+  }
 
   isFirstRowOrFirstColumn(number: number): boolean {
     let result: boolean =

@@ -75,7 +75,6 @@ const getDimensions = (x) => {
 }
 
 const customSort = (x) => {
-  console.log(x);
   return x.split(",").map(range => range.trim()).sort((prv, nxt) => {
     let a = isNaN(prv) ? parseInt(prv.split('-')[0]) : parseInt(prv);
     let b = isNaN(nxt) ? parseInt(nxt.split('-')[0]) : parseInt(nxt);
