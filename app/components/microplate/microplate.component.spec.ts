@@ -22,4 +22,8 @@ describe('MicroplateComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('#isNotRangeItem("3-9") should return false', () => {
+    expect(component.isNotRangeItem('3-9')).toBe(false);
+  });
 });

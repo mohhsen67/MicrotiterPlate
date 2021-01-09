@@ -1,3 +1,4 @@
+import { SplitInterpolation } from '@angular/compiler';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Validators, FormControl, FormGroup } from '@angular/forms';
 import { isValidValidator } from '../../directives/is-valid.directive';
@@ -35,12 +36,12 @@ export class MicroplateComponent implements OnInit {
     this.form.patchValue({ 'columns': customSort(columns).join(', ') });
   }
 
-  onKeyUp(value: string): void {
-    value = value.split(' ').join('');
+  onKeyUp(event: any): void {
+    let value: string = event.target.value.split(' ').join('');
 
     if (isNumbersFieldValid(value)) {
       const inputArr: Array<string> = value.split(',');
-      const result = [];
+      const result: number[] = [];
 
       inputArr.forEach( (item: string) => {
         if(this.isNotRangeItem(item)) {
@@ -55,7 +56,6 @@ export class MicroplateComponent implements OnInit {
         }
       });
 
-      //this.selectedColumns = result.sort( (a, b) => a - b);
       this.selectedColumns = result;
     } else {
       this.selectedColumns = [];
@@ -73,7 +73,6 @@ export class MicroplateComponent implements OnInit {
   }
 
   updateInput(selectedColumns: Array<number>): void {
-    // this.form.patchValue({ 'columns': selectedColumns.sort( (a, b) => a - b ).join(', ') });
     this.form.patchValue({ 'columns': customSort(selectedColumns.join(',')).join(', ') });
   }
 }

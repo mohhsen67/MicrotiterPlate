@@ -16,13 +16,22 @@ export class PlateSelectorComponent implements OnInit {
 
   // I added some more wells because of the indicators (first row numbers and first column letters)
   numbers: Array<number> = [];
-  
-  ngOnInit() {
-    // We can dynamically calculate the number of columns based on the whole number of wells
-    this.columns = getDimensions(96)[1];
+  rows: number = 0;
 
-    this.numbers = Array(this.wells + this.columns + (this.wells / this.columns + 1))
-                     .fill().map((item, index) => ++index);
+  ngOnInit() {
+    this.provideDataForDrawingPlate();
+  }
+
+  provideDataForDrawingPlate(): void {
+    // Disk/Plate dimentions (including indicator wells - i.e., letters and column numbers)
+    const arrDimentsions = getDimensions(96);
+    this.rows = arrDimentsions[0];
+    this.columns = arrDimentsions[1];
+
+    // numbers are used to draw the disk/plate (We also need some extra numbers
+    // because of the indicators (letters and column numbers))
+    for (let i = 1; i <= this.wells + this.rows + this.columns + 1; i++)
+      this.numbers.push(i);
   }
 
   isFirstRowOrFirstColumn(number: number): boolean {
@@ -58,8 +67,8 @@ export class PlateSelectorComponent implements OnInit {
     return this.selectedColumns.indexOf((number - 1) % (this.columns + 1)) != -1;
   }
 
-  onSelectColumn (number: number) {
-    if(this.isFirstColumn(number)) return;
+  onSelectColumn(number: number) {
+    if (this.isFirstColumn(number)) return;
 
     this.selectedColumns.push((number - 1) % (this.columns + 1));
 
