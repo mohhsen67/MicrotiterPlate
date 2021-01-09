@@ -1,6 +1,5 @@
-import { SplitInterpolation } from '@angular/compiler';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Validators, FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { isValidValidator } from '../../directives/is-valid.directive';
 const { isNumbersFieldValid, customSort } = require('../../utils/utils.js');
 import { PlateSelectorComponent } from '../plate-selector/plate-selector.component';
@@ -20,7 +19,6 @@ export class MicroplateComponent implements OnInit {
   ngOnInit(): void {
     this.form = new FormGroup({
       columns: new FormControl('', [
-        Validators.required,
         isValidValidator()
       ])
     });
@@ -66,6 +64,8 @@ export class MicroplateComponent implements OnInit {
   }
 
   isNotRangeItem(item: string): boolean {
+    if(item === '') return true;
+
     return item.indexOf('-') == -1;
   }
 

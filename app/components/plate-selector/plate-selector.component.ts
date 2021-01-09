@@ -19,12 +19,12 @@ export class PlateSelectorComponent implements OnInit {
   rows: number = 0;
 
   ngOnInit() {
-    this.provideDataForDrawingPlate();
+    this.provideDataForDrawingPlate(96);
   }
 
-  provideDataForDrawingPlate(): void {
+  provideDataForDrawingPlate(wells: number): void {
     // Disk/Plate dimentions (including indicator wells - i.e., letters and column numbers)
-    const arrDimentsions = getDimensions(96);
+    const arrDimentsions = getDimensions(wells);
     this.rows = arrDimentsions[0];
     this.columns = arrDimentsions[1];
 

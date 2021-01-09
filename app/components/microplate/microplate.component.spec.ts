@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import 'jasmine';
 import { MicroplateComponent } from './microplate.component';
 
 describe('MicroplateComponent', () => {
@@ -8,9 +8,9 @@ describe('MicroplateComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MicroplateComponent ]
+      declarations: [MicroplateComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
@@ -23,7 +23,21 @@ describe('MicroplateComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('#isNotRangeItem("3-9") should return false', () => {
-    expect(component.isNotRangeItem('3-9')).toBe(false);
+  describe('#isNotRangeItem(string)', () => {
+    it('#isNotRangeItem("3-9") should return false', () => {
+      expect(component.isNotRangeItem('3-9')).toBe(false);
+    });
+
+    it('#isNotRangeItem("3") should return true', () => {
+      expect(component.isNotRangeItem('3')).toBe(true);
+    });
+
+    it('#isNotRangeItem("") should return true', () => {
+      expect(component.isNotRangeItem('')).toBe(true);
+    });
+
+    it('#isNotRangeItem(",") should return true', () => {
+      expect(component.isNotRangeItem('')).toBe(true);
+    });
   });
 });
