@@ -68,9 +68,14 @@ export class PlateSelectorComponent implements OnInit {
   }
 
   onSelectColumn(number: number) {
+    console.clear();
+    console.log(number);
     if (this.isFirstColumn(number)) return;
-
+    console.log(100000);
+    console.log(this.selectedColumns);
     this.selectedColumns.push((number - 1) % (this.columns + 1));
+    console.log('calc', (number - 1) % (this.columns + 1));
+    console.log(this.selectedColumns);
 
     this.selectColumn.emit(this.selectedColumns);
   }

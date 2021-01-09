@@ -35,7 +35,6 @@ export class MicroplateComponent implements OnInit {
   }
 
   onKeyUp(event: any): void {
-    console.clear();
     let value: string = event.target.value.split(' ').join('');
     
     if (isNumbersFieldValid(value)) {
@@ -43,7 +42,7 @@ export class MicroplateComponent implements OnInit {
       const result: number[] = [];
 
       inputArr.forEach( (item: string) => {
-        if(this.isNotRangeItem(item)) {
+        if(this.isNotRangeItem(item) && item != '') {
           result.push(parseInt(item));
         } else {
           const start: number = parseInt(item.substr(0, item.indexOf('-')));
