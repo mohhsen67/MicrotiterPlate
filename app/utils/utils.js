@@ -11,7 +11,7 @@ const isNumbersFieldValid = (str) => {
   const track = {};
 
   // Visit the numbers
-  for (const num of nums) {
+  for (let num of nums) {
 
     // Check if any number contains a dash (-)
     if (/\-/.test(num)) {
@@ -36,7 +36,8 @@ const isNumbersFieldValid = (str) => {
     } else {
 
       // Checking again if it exceed the range [1, 384] or appears before.
-      if (num * 1 >= lower && num * 1 <= upper && track[num] === undefined) {
+      num *= 1;
+      if (num >= lower && num <= upper && track[num] === undefined) {
         track[num] = true;
       } else {
         return false;
@@ -48,40 +49,39 @@ const isNumbersFieldValid = (str) => {
   return true;
 }
 
-const getDimensions = (x) => {
-  const root = Math.sqrt(x);
+const getDimensions = (inputNumber) => {
+  const root = Math.sqrt(inputNumber);
   const natural_root = Math.floor(root);
-  if (root === natural_root) {
-    return [natural_root, natural_root];
-  }
 
-  let a = 0;
+  if (root === natural_root) return [natural_root, natural_root];
+
+  let rowsCount = 0;
+  // O(Sqrt(n))
   for (let i = natural_root; i > 0; i--) {
-    if (x % i === 0) {
-      a = i;
+    if (inputNumber % i === 0) {
+      rowsCount = i;
       break;
     }
   }
 
-  let b = 0;
-  for (let i = natural_root + 1; i <= x; i++) {
-    if (x % i === 0) {
-      b = i;
+  let columnsCount = 0;
+  // O(n/2 - Sqrt(n)) => O(n)
+  for (let i = natural_root + 1; i <= inputNumber; i++) {
+    if (inputNumber % i === 0) {
+      columnsCount = i;
       break;
     }
   }
 
-  return [a, b];
+  return [rowsCount, columnsCount];
 }
 
-const customSort = (x) => {
-  return x.split(",").map(range => range.trim()).sort((prv, nxt) => {
-    let a = isNaN(prv) ? parseInt(prv.split('-')[0]) : parseInt(prv);
-    let b = isNaN(nxt) ? parseInt(nxt.split('-')[0]) : parseInt(nxt);
-    
-    return a - b;
-  });
-}
+// O(n + n + n^2) => O(n^2)
+const customSort = (str) => str.split(",") // n
+  .map(item => item.trim()) // n
+  .sort((prv, nxt) => extractStart(prv) - extractStart(nxt)); // n^2
+
+const extractStart = str => isNaN(str) ? parseInt(str.split('-')[0]) : parseInt(str);
 
 module.exports.isNumbersFieldValid = isNumbersFieldValid;
 module.exports.getDimensions = getDimensions;

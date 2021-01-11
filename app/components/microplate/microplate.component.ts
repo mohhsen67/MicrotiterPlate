@@ -17,6 +17,10 @@ export class MicroplateComponent implements OnInit {
   plateSelector: PlateSelectorComponent;
 
   ngOnInit(): void {
+    this.initForm();
+  }
+
+  private initForm(): void {
     this.form = new FormGroup({
       columns: new FormControl('', [
         isValidValidator()
@@ -36,19 +40,18 @@ export class MicroplateComponent implements OnInit {
 
   onKeyUp(event: any): void {
     let value: string = event.target.value.split(' ').join('');
-    
+
     if (isNumbersFieldValid(value)) {
       const inputArr: Array<string> = value.split(',');
       const result: number[] = [];
 
-      inputArr.forEach( (item: string) => {
-        if(this.isNotRangeItem(item) && item != '') {
+      inputArr.forEach((item: string) => {
+        if (this.isNotRangeItem(item) && item != '') {
           result.push(parseInt(item));
         } else {
-          const start: number = parseInt(item.substr(0, item.indexOf('-')));
-          const end: number = parseInt(item.substr(item.indexOf('-') + 1));
+          const [start, end] = item.split('-').map(n => parseInt(n));
 
-          for(let i = start; i <= end; i++) {
+          for (let i = start; i <= end; i++) {
             result.push(i);
           }
         }
@@ -59,11 +62,11 @@ export class MicroplateComponent implements OnInit {
       this.selectedColumns = [];
     }
 
-    this.updatePlate();    
+    this.updatePlate();
   }
 
   isNotRangeItem(item: string): boolean {
-    if(item === '') return true;
+    if (item === '') return true;
 
     return item.indexOf('-') == -1;
   }
