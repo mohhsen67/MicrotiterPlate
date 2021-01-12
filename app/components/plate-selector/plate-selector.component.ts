@@ -72,6 +72,6 @@ export class PlateSelectorComponent implements OnInit {
 
     this.selectedColumns.push((number - 1) % (this.columns + 1));
 
-    this.selectColumn.emit(this.selectedColumns);
+    this.selectColumn.emit(this.selectedColumns.join(','));
   }
 }

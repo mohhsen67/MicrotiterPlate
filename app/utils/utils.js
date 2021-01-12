@@ -66,7 +66,7 @@ const getDimensions = (inputNumber) => {
 
   let columnsCount = 0;
   // O(n/2 - Sqrt(n)) => O(n)
-  for (let i = natural_root + 1; i <= inputNumber; i++) {
+  for (let i = natural_root + 1; i <= inputNumber / 2; i++) {
     if (inputNumber % i === 0) {
       columnsCount = i;
       break;
@@ -77,9 +77,11 @@ const getDimensions = (inputNumber) => {
 }
 
 // O(n + n + n^2) => O(n^2)
-const customSort = (str) => str.split(",") // n
-  .map(item => item.trim()) // n
-  .sort((prv, nxt) => extractStart(prv) - extractStart(nxt)); // n^2
+const customSort = (strColumns) => 
+  strColumns.split(",") // n
+            .map(item => item.trim()) // n
+            .sort((prv, nxt) => extractStart(prv) - extractStart(nxt)) // n^2
+            .join(', ');
 
 const extractStart = str => isNaN(str) ? parseInt(str.split('-')[0]) : parseInt(str);
 

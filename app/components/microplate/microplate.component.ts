@@ -35,7 +35,7 @@ export class MicroplateComponent implements OnInit {
   onBlurEvent(event: any) {
     const columns = event.target.value;
 
-    this.form.patchValue({ 'columns': customSort(columns).join(', ') });
+    this.updateFormInputBox(columns);
   }
 
   onKeyUp(event: any): void {
@@ -75,7 +75,7 @@ export class MicroplateComponent implements OnInit {
     this.plateSelector.onColumnsChanged(this.selectedColumns);
   }
 
-  updateInput(selectedColumns: Array<number>): void {
-    this.form.patchValue({ 'columns': customSort(selectedColumns.join(',')).join(', ') });
+  updateFormInputBox(columns: string): void {
+    this.form.patchValue({ 'columns': customSort(columns) });
   }
 }

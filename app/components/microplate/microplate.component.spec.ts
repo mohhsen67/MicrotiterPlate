@@ -40,4 +40,6 @@ describe('MicroplateComponent', () => {
       expect(component.isNotRangeItem('')).toBe(true);
     });
   });
+
+  describe('')
 });
