@@ -9,14 +9,15 @@ const { getDimensions } = require('../../utils/utils.js');
 // Child Component.
 export class PlateSelectorComponent implements OnInit {
   @Input() wells: number;
+  @Output() selectColumn: EventEmitter<any> = new EventEmitter<any>();
+
   columns: number;
   letters: Array<string> = 'abcdefghijklmnopqrstuvwxyz'.toUpperCase().split('');
   selectedColumns: Array<number> = [];
-  @Output() selectColumn: EventEmitter<any> = new EventEmitter<any>();
 
   // I added some more wells because of the indicators (first row numbers and first column letters)
   numbers: Array<number> = [];
-  rows: number = 0;
+  rows = 0;
 
   ngOnInit() {
     this.provideDataForDrawingPlate(96);
@@ -30,47 +31,50 @@ export class PlateSelectorComponent implements OnInit {
 
     // numbers are used to draw the disk/plate (We also need some extra numbers
     // because of the indicators (letters and column numbers))
-    for (let i = 1; i <= this.wells + this.rows + this.columns + 1; i++)
+    for (let i = 1; i <= this.wells + this.rows + this.columns + 1; i++) {
       this.numbers.push(i);
+    }
   }
 
-  isFirstRowOrFirstColumn(number: number): boolean {
-    let result: boolean =
-      (this.isFirstColumn(number) ||
-        this.isFirstRow(number)) &&
-      !this.isExactlyFirstCell(number);
+  isFirstRowOrFirstColumn(num: number): boolean {
+    const result: boolean =
+      (this.isFirstColumn(num) ||
+        this.isFirstRow(num)) &&
+      !this.isExactlyFirstCell(num);
 
     return result;
   }
 
-  isLastColumn(number: number): boolean {
-    return number % (this.columns + 1) == 1;
+  isLastColumn(num: number): boolean {
+    return num % (this.columns + 1) === 1;
   }
 
-  isFirstColumn(number: number): boolean {
-    return number % (this.columns + 1) == 1;
+  isFirstColumn(num: number): boolean {
+    return num % (this.columns + 1) === 1;
   }
 
-  isFirstRow(number: number): boolean {
-    return number <= this.columns + 1;
+  isFirstRow(num: number): boolean {
+    return num <= this.columns + 1;
   }
 
-  isExactlyFirstCell(number: number): boolean {
-    return number == 1;
+  isExactlyFirstCell(num: number): boolean {
+    return num === 1;
   }
 
   onColumnsChanged(selectedColumns: Array<number>): void {
     this.selectedColumns = selectedColumns;
   }
 
-  isWellSelected(number: number): boolean {
-    return this.selectedColumns.indexOf((number - 1) % (this.columns + 1)) != -1;
+  isWellSelected(num: number): boolean {
+    return this.selectedColumns.indexOf((num - 1) % (this.columns + 1)) !== -1;
   }
 
-  onSelectColumn(number: number) {
-    if (this.isFirstColumn(number)) return;
+  onSelectColumn(num: number) {
+    if (this.isFirstColumn(num)) {
+      return;
+    }
 
-    this.selectedColumns.push((number - 1) % (this.columns + 1));
+    this.selectedColumns.push((num - 1) % (this.columns + 1));
 
     this.selectColumn.emit(this.selectedColumns.join(','));
   }

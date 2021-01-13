@@ -11,27 +11,15 @@ import { PlateSelectorComponent } from '../plate-selector/plate-selector.compone
 })
 // Parent Component
 export class MicroplateComponent implements OnInit {
-  form: FormGroup;
-  selectedColumns: Array<number> = [];
-
   // Call child's method from parent
   @ViewChild(PlateSelectorComponent)
   plateSelector: PlateSelectorComponent;
 
+  form: FormGroup;
+  selectedColumns: Array<number> = [];
+
   ngOnInit(): void {
     this.initForm();
-  }
-
-  private initForm(): void {
-    this.form = new FormGroup({
-      columns: new FormControl('', [
-        isValidValidator()
-      ])
-    });
-  }
-
-  get columns() {
-    return this.form.get('columns');
   }
 
   onBlurEvent(event: any) {
@@ -41,17 +29,17 @@ export class MicroplateComponent implements OnInit {
   }
 
   onKeyUp(event: any): void {
-    let value: string = event.target.value.split(' ').join('');
+    const value: string = event.target.value.split(' ').join('');
 
     if (isNumbersFieldValid(value)) {
       const inputArr: Array<string> = value.split(',');
       const result: number[] = [];
 
       inputArr.forEach((item: string) => {
-        if (this.isNotRangeItem(item) && item != '') {
-          result.push(parseInt(item));
+        if (this.isNotRangeItem(item) && item !== '') {
+          result.push(parseInt(item, 10));
         } else {
-          const [start, end] = item.split('-').map(n => parseInt(n));
+          const [start, end] = item.split('-').map(n => parseInt(n, 10));
 
           for (let i = start; i <= end; i++) {
             result.push(i);
@@ -67,10 +55,24 @@ export class MicroplateComponent implements OnInit {
     this.updatePlate();
   }
 
-  isNotRangeItem(item: string): boolean {
-    if (item === '') return true;
+  initForm(): void {
+    this.form = new FormGroup({
+      columns: new FormControl('', [
+        isValidValidator()
+      ])
+    });
+  }
 
-    return item.indexOf('-') == -1;
+  get columns() {
+    return this.form.get('columns');
+  }
+
+  isNotRangeItem(item: string): boolean {
+    if (item === '') {
+      return true;
+    }
+
+    return item.indexOf('-') === -1;
   }
 
   updatePlate(): void {
@@ -78,6 +80,6 @@ export class MicroplateComponent implements OnInit {
   }
 
   updateFormInputBox(columns: string): void {
-    this.form.patchValue({ 'columns': customSort(columns) });
+    this.form.patchValue({ columns: customSort(columns) });
   }
 }

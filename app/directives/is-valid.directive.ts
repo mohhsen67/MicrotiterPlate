@@ -3,19 +3,18 @@ import { AbstractControl, NG_VALIDATORS, Validator, ValidatorFn } from '@angular
 const { isNumbersFieldValid } = require('../utils/utils.js');
 
 export function isValidValidator(): ValidatorFn {
-  return (control: AbstractControl): {[key: string]: any} | null => {
-    return isNumbersFieldValid(control.value) ? {isValid: {value: control.value}} : null;
-  };
+  return (control: AbstractControl): { [key: string]: any } | null =>
+    isNumbersFieldValid(control.value) ? { isValid: { value: control.value } } : null;
 }
 
 @Directive({
   selector: '[appIsValid]',
-  providers: [{provide: NG_VALIDATORS, useExisting: IsValidDirective, multi: true}]
+  providers: [{ provide: NG_VALIDATORS, useExisting: IsValidDirective, multi: true }]
 })
 export class IsValidDirective implements Validator {
   @Input('appIsValid') isValid: string;
 
-  validate(control: AbstractControl): {[key: string]: any} | null {
+  validate(control: AbstractControl): { [key: string]: any } | null {
     return this.isValid ? isValidValidator()(control) : null;
   }
 }
