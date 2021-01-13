@@ -2,11 +2,9 @@ import { Directive, Input } from '@angular/core';
 import { AbstractControl, NG_VALIDATORS, Validator, ValidatorFn } from '@angular/forms';
 const { isNumbersFieldValid } = require('../utils/utils.js');
 
-// export function isValidValidator(): ValidatorFn {
-const isValidValidator = (): ValidatorFn =>
+export const isValidValidator = (): ValidatorFn =>
   (control: AbstractControl): { [key: string]: any } | null =>
     isNumbersFieldValid(control.value) ? { isValid: { value: control.value } } : null;
-// }
 
 @Directive({
   selector: '[appIsValid]',
