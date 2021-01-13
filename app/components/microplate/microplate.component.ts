@@ -13,6 +13,8 @@ import { PlateSelectorComponent } from '../plate-selector/plate-selector.compone
 export class MicroplateComponent implements OnInit {
   form: FormGroup;
   selectedColumns: Array<number> = [];
+
+  // Call child's method from parent
   @ViewChild(PlateSelectorComponent)
   plateSelector: PlateSelectorComponent;
 
